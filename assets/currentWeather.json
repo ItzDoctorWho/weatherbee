@@ -1,0 +1,43 @@
+{
+    "coord": {
+        "lon": 10.8333,
+        "lat": 35.7833
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 292.14,
+        "feels_like": 291.35,
+        "temp_min": 292.14,
+        "temp_max": 293.13,
+        "pressure": 1022,
+        "humidity": 48
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.54,
+        "deg": 30
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1671632143,
+    "sys": {
+        "type": 1,
+        "id": 1193,
+        "country": "TN",
+        "sunrise": 1671603767,
+        "sunset": 1671638789
+    },
+    "timezone": 3600,
+    "id": 2473493,
+    "name": "Monastir",
+    "cod": 200
+}

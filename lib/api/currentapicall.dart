@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'package:weatherbee/api/apikey.dart';
 import 'package:weatherbee/api/currentweathermodel.dart';
 import 'package:http/http.dart' as http;
 
 String baseURL = "https://api.openweathermap.org";
-String apiKey = "bcee12d9c0f84582179be71d8d7ad35a";
 String settingsURL = "q=monastir&appid=$apiKey";
 String city = "monastir";
 

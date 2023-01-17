@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:weatherbee/api/apikey.dart.gitignore';
+import 'package:weatherbee/api/apikey.dart';
 import 'package:weatherbee/api/currentweathermodel.dart';
 import 'package:http/http.dart' as http;
 

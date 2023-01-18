@@ -7,8 +7,8 @@ class CurrentWeather {
   final num feelsLike;
   final num minTemperature;
   final num maxTemperature;
-  final int pressure;
-  final int humidity;
+  final num pressure;
+  final num humidity;
   final num windSpeed;
   final num windDegree;
   final int visibility;
@@ -16,8 +16,6 @@ class CurrentWeather {
   final double rainVolume;
   final double snowVolume;
   final double uvi;
-  final double latitude;
-  final double longitude;
   final int sunrise;
   final int sunset;
   final int timezone;
@@ -41,8 +39,6 @@ class CurrentWeather {
       this.rainVolume,
       this.snowVolume,
       this.uvi,
-      this.latitude,
-      this.longitude,
       this.sunrise,
       this.sunset,
       this.timezone,
@@ -67,8 +63,6 @@ class CurrentWeather {
       rainVolume: json['rain'] == null ? 0 : json['rain']['1h'],
       snowVolume: json['snow'] == null ? 0 : json['snow']['1h'],
       uvi: json['uvi'],
-      latitude: json['coord']['lat'],
-      longitude: json['coord']['lon'],
       sunrise: json['sys']['sunrise'],
       sunset: json['sys']['sunset'],
       timezone: json['timezone'],

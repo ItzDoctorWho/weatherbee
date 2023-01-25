@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class WeatherCard extends StatelessWidget {
   const WeatherCard(
       {Key key, this.day, this.date, this.weatherStatus, this.temp, this.color})
       : super(key: key);
   final String day;
-  final String date;
+  final int date;
   final String weatherStatus;
   final String temp;
   final String color;
@@ -13,6 +14,7 @@ class WeatherCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 200,
+      width: 90,
       child: Material(
         elevation: 10,
         borderRadius: const BorderRadius.all(Radius.circular(30)),
@@ -48,7 +50,8 @@ class WeatherCard extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    day,
+                    DateFormat.E().format(
+                        DateTime.fromMillisecondsSinceEpoch(date * 1000)),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -61,7 +64,8 @@ class WeatherCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    date,
+                    DateFormat("d MMM").format(
+                        DateTime.fromMillisecondsSinceEpoch(date * 1000)),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: color == "colored"
@@ -72,8 +76,12 @@ class WeatherCard extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  Image.asset("assets/$weatherStatus.png",
-                      height: 70, width: 70),
+                  Image.network(
+                    "http://openweathermap.org/img/w/$weatherStatus.png",
+                    height: 70,
+                    width: 70,
+                    fit: BoxFit.cover,
+                  ),
                   Text(
                     "$temp°",
                     style: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatherbee/api/currentapicall.dart';
+import 'package:weatherbee/api/fivedaysforecast.dart';
 import 'package:weatherbee/widgets/topbar.dart';
 import 'package:weatherbee/widgets/details_widget.dart';
 import 'package:weatherbee/widgets/weather_status.dart';
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     getCurrentWeather(city);
+    getfivedaysWeather(city);
     super.initState();
   }
 
@@ -120,67 +122,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: const <Widget>[
-                              WeatherCard(
-                                day: "Mon",
-                                date: "12 jan",
-                                weatherStatus: "sun-cloud-mid-rain",
-                                temp: "20",
-                                color: "colored",
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              WeatherCard(
-                                day: "Tue",
-                                date: "13 jan",
-                                weatherStatus: "moon-cloud-fast-wind",
-                                temp: "18",
-                                color: "not colored",
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              WeatherCard(
-                                day: "Wed",
-                                date: "14 jan",
-                                weatherStatus: "sun-cloud-angled-rain",
-                                temp: "16",
-                                color: "colored",
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              WeatherCard(
-                                day: "Thu",
-                                date: "15 jan",
-                                weatherStatus: "raindrops",
-                                temp: "20",
-                                color: "not colored",
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              WeatherCard(
-                                day: "Fri",
-                                date: "16 jan",
-                                weatherStatus: "tornado",
-                                temp: "20",
-                                color: "colored",
-                              ),
-                              SizedBox(
-                                height: 10,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                    FutureBuilder(
+                      future: getfivedaysWeather(city),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var weather = snapshot.data;
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: weather.length,
+                              itemBuilder: (context, index) {
+                                return WeatherCard(
+                                  day: city,
+                                  date: weather[index].date,
+                                  weatherStatus: weather[index].weatherIcon,
+                                  temp: weather[index]
+                                      .temperature
+                                      .toString()
+                                      .split(".")[0],
+                                  color: index % 2 == 0 ? 'colored' : 'white',
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  width: 10,
+                                );
+                              },
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

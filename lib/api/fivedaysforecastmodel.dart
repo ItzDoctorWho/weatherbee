@@ -1,23 +1,13 @@
-class FiveDaysForecast {
-  final List<Forecast> list;
-  FiveDaysForecast({this.list});
-  factory FiveDaysForecast.fromJson(Map<String, dynamic> json) {
-    var list = json['list'] as List;
-    List<Forecast> forecastList =
-        list.map((i) => Forecast.fromJson(i)).toList();
-    return FiveDaysForecast(list: forecastList);
-  }
-}
 
 class Forecast {
-  final String date;
+  final int date;
   final String weatherStatus;
   final String weatherDescription;
   final String weatherIcon;
-  final double temperature;
-  final double feelsLike;
-  final double minTemperature;
-  final double maxTemperature;
+  final num temperature;
+  final num feelsLike;
+  final num minTemperature;
+  final num maxTemperature;
   final int pressure;
   final int humidity;
   final double windSpeed;
@@ -27,8 +17,7 @@ class Forecast {
   final double rainVolume;
   final double snowVolume;
   final double uvi;
-  final double latitude;
-  final double longitude;
+
   final int sunrise;
   final int sunset;
   final int timezone;
@@ -51,8 +40,6 @@ class Forecast {
       this.rainVolume,
       this.snowVolume,
       this.uvi,
-      this.latitude,
-      this.longitude,
       this.sunrise,
       this.sunset,
       this.timezone});
@@ -76,13 +63,9 @@ class Forecast {
       rainVolume: json['rain'] != null ? json['rain']['3h'] : 0,
       snowVolume: json['snow'] != null ? json['snow']['3h'] : 0,
       uvi: json['uvi'],
-      latitude: json['coord']['lat'],
-      longitude: json['coord']['lon'],
       sunrise: json['sys']['sunrise'],
       sunset: json['sys']['sunset'],
       timezone: json['timezone'],
     );
   }
-
-
 }

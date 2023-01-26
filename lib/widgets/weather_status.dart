@@ -9,12 +9,14 @@ class Weather_status extends StatelessWidget {
     this.date,
     this.temp,
     this.feelsLike,
+    this.unit,
   }) : super(key: key);
   final String status;
   final String icon;
   final String date;
   final String temp;
   final String feelsLike;
+  final String unit;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,9 @@ class Weather_status extends StatelessWidget {
               bottom: 50,
               right: 40,
               child: Text(
-                "Feels like $feelsLike° C",
+                unit == "metric"
+                    ? "Feels like $feelsLike° C"
+                    : "Feels like $feelsLike° F",
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,

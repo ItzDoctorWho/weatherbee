@@ -17,9 +17,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String city = "tabarka";
-  callbackfun(varcity) {
+  String unit = "metric";
+  callbackcity(varcity) {
     setState(() {
       city = varcity;
+    });
+  }
+
+  callbackunit(varunit) {
+    setState(() {
+      unit = varunit;
     });
   }
 
@@ -54,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     FutureBuilder(
-                      future: getCurrentWeather(city),
+                      future: getCurrentWeather(city, unit),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           var weather = snapshot.data;
@@ -63,7 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Topbar(
                                 currentCity: city,
-                                callback: callbackfun,
+                                currentunit: unit,
+                                callback: callbackcity,
+                                callback2: callbackunit,
                               ),
                               SizedBox(
                                 height:
@@ -80,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         weather.date * 1000)),
                                 feelsLike:
                                     weather.feelsLike.toString().split(".")[0],
+                                unit: unit,
                               ),
                               const SizedBox(
                                 height: 15,
@@ -101,6 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 visibility: (weather.visibility / 1000)
                                     .toString()
                                     .split(".")[0],
+                                unit: unit,
                               ),
                               const SizedBox(
                                 height: 10,
@@ -125,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 10,
                     ),
                     FutureBuilder(
-                      future: getfivedaysWeather(city),
+                      future: getfivedaysWeather(city, unit),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           var weather = snapshot.data;
@@ -201,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 20,
                     ),
                     FutureBuilder(
-                      future: getCurrentWeather(city),
+                      future: getCurrentWeather(city, unit),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           var weather = snapshot.data;

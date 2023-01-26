@@ -1,16 +1,11 @@
 import 'dart:convert';
 import 'package:weatherbee/api/apikey.dart';
-import 'package:weatherbee/api/currentweathermodel.dart';
 import 'package:http/http.dart' as http;
 import 'package:weatherbee/api/fivedaysforecastmodel.dart';
 
-String baseURL = "https://api.openweathermap.org";
-String settingsURL = "q=monastir&appid=$apiKey";
-String city = "monastir";
-
-Future<List<Forecast>> getfivedaysWeather(String city) async {
+Future<List<Forecast>> getfivedaysWeather(String city, String unit) async {
   var url = Uri.http("api.openweathermap.org", "data/2.5/forecast",
-      {"q": city, "appid": apiKey, "units": "metric"});
+      {"q": city, "appid": apiKey, "units": unit});
   final response = await http.get(url);
   if (response.statusCode == 200) {
     var body = jsonDecode(response.body);

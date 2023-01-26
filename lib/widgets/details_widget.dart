@@ -10,6 +10,7 @@ class Details extends StatelessWidget {
     this.pressure,
     this.windSpeed,
     this.visibility,
+    this.unit,
   }) : super(key: key);
   final String statusdesc;
   final String max;
@@ -18,6 +19,7 @@ class Details extends StatelessWidget {
   final String pressure;
   final String windSpeed;
   final String visibility;
+  final String unit;
   String capitalize(String value) {
     var result = value[0].toUpperCase();
     bool cap = true;
@@ -115,7 +117,7 @@ class Details extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "$max°",
+                                unit == "metric" ? "$max° C" : "$max° F",
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -222,7 +224,7 @@ class Details extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "$min°",
+                                unit == "metric" ? "$min° C" : "$min° F",
                                 textAlign: TextAlign.center,
                               ),
                             ],

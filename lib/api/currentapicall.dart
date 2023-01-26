@@ -3,13 +3,12 @@ import 'package:weatherbee/api/apikey.dart';
 import 'package:weatherbee/api/currentweathermodel.dart';
 import 'package:http/http.dart' as http;
 
-String baseURL = "https://api.openweathermap.org";
-String city = "tabarka";
+String baseURL = "api.openweathermap.org";
 
-//city existence check
-Future<bool> checkCityExists(String city) async {
+// ignore: missing_return
+Future<bool> checkCityExists(String city, String unit) async {
   final response = await http.get(Uri.http(baseURL, "data/2.5/weather",
-      {"q": city, "appid": apiKey, "units": "metric"}));
+      {"q": city, "units": unit, "appid": apiKey}));
   if (response.statusCode == 200) {
     Map<String, dynamic> jsonData = jsonDecode(response.body);
     if (jsonData["cod"] == "200") {
@@ -20,9 +19,9 @@ Future<bool> checkCityExists(String city) async {
   }
 }
 
-Future<CurrentWeather> getCurrentWeather(String city) async {
+Future<CurrentWeather> getCurrentWeather(String city, String unit) async {
   var url = Uri.http("api.openweathermap.org", "data/2.5/weather",
-      {"q": city, "appid": apiKey, "units": "metric"});
+      {"q": city, "units": unit, "appid": apiKey});
   final response = await http.get(url);
   if (response.statusCode == 200) {
     var body = jsonDecode(response.body);

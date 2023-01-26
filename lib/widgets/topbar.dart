@@ -3,9 +3,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:weatherbee/api/currentapicall.dart';
 
 class Topbar extends StatelessWidget {
-  Topbar({Key key, this.currentCity, this.callback}) : super(key: key);
+  Topbar(
+      {Key key,
+      this.currentCity,
+      this.callback,
+      this.currentunit,
+      this.callback2})
+      : super(key: key);
   final String currentCity;
+  final String currentunit;
   final Function callback;
+  final Function callback2;
   String capitalize(String value) {
     var result = value[0].toUpperCase();
     bool cap = true;
@@ -39,7 +47,50 @@ class Topbar extends StatelessWidget {
             child: RawMaterialButton(
               fillColor: Colors.white,
               shape: const CircleBorder(),
-              onPressed: () => {},
+              onPressed: () => {
+                //show dialogue with a switch from metric to imperial
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Change Unit"),
+                      content: StatefulBuilder(
+                        builder: (context, setState) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              RadioListTile(
+                                title: const Text("Metric"),
+                                value: "metric",
+                                groupValue: currentunit,
+                                onChanged: (value) {
+                                  Navigator.pop(context, callback2(value));
+                                },
+                              ),
+                              RadioListTile(
+                                title: const Text("Imperial"),
+                                value: "imperial",
+                                groupValue: currentunit,
+                                onChanged: (value) {
+                                  Navigator.pop(context, callback2(value));
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Cancel"),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              },
               child: const Icon(
                 Icons.tune,
                 size: 35,
@@ -94,19 +145,33 @@ class Topbar extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () async {
-                            bool x = await checkCityExists(controller);
-                            if (x == false) {
-                              Fluttertoast.showToast(
-                                  msg:
-                                      "City changed to ${capitalize(controller)}",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor:
-                                      Color.fromARGB(255, 106, 106, 106),
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
-                              Navigator.pop(context, callback(controller));
+                            bool x;
+                            if (controller != null) {
+                              x = await checkCityExists(
+                                  controller, currentunit);
+                              if ((x == false)) {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "City changed to ${capitalize(controller)}",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 106, 106, 106),
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                                Navigator.pop(context, callback(controller));
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter a valid city name",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 106, 106, 106),
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
                             } else {
                               Fluttertoast.showToast(
                                   msg: "Please enter a valid city name",
@@ -114,7 +179,7 @@ class Topbar extends StatelessWidget {
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
                                   backgroundColor:
-                                      Color.fromARGB(255, 106, 106, 106),
+                                      const Color.fromARGB(255, 106, 106, 106),
                                   textColor: Colors.white,
                                   fontSize: 16.0);
                             }

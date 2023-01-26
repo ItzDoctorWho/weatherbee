@@ -17,7 +17,6 @@ class Forecast {
   final double rainVolume;
   final double snowVolume;
   final double uvi;
-
   final int sunrise;
   final int sunset;
   final int timezone;

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:weatherbee/api/currentapicall.dart';
 import 'package:weatherbee/api/fivedaysforecast.dart';
 import 'package:weatherbee/widgets/topbar.dart';
@@ -14,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String city = "monastir";
+  String city = "tabarka";
   callbackfun(varcity) {
     setState(() {
       city = varcity;
@@ -23,8 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    getCurrentWeather(city);
-    getfivedaysWeather(city);
     super.initState();
   }
 
@@ -75,7 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     .toString()
                                     .split(".")[0],
                                 icon: weather.weatherIcon,
-                                date: "Mon, 16 Jan",
+                                date: DateFormat("E MMM DD").format(
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        weather.date * 1000)),
                                 feelsLike:
                                     weather.feelsLike.toString().split(".")[0],
                               ),
@@ -158,6 +160,140 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                     ),
+                    //future builder that displays rain
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        Text(
+                          "Rainmeter",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Snowmeter",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "UVI meter",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    FutureBuilder(
+                      future: getCurrentWeather(city),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var weather = snapshot.data;
+                          return Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SimpleCircularProgressBar(
+                                  valueNotifier: weather.rainVolume != null
+                                      ? ValueNotifier(double.parse(
+                                          weather.rainVolume.toString()))
+                                      : ValueNotifier(0),
+                                  mergeMode: true,
+                                  maxValue: 5,
+                                  progressColors: const [
+                                    Color.fromARGB(255, 72, 31, 176),
+                                    Color.fromARGB(255, 214, 49, 222),
+                                  ],
+                                  backColor: Color.fromARGB(120, 89, 89, 90),
+                                  onGetText: (double value) {
+                                    return Text(
+                                      value.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 72, 31, 176),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SimpleCircularProgressBar(
+                                  valueNotifier: weather.snowVolume != null
+                                      ? ValueNotifier(double.parse(
+                                          weather.snowVolume.toString()))
+                                      : ValueNotifier(0),
+                                  mergeMode: true,
+                                  progressColors: const [
+                                    Color.fromARGB(255, 72, 31, 176),
+                                    Color.fromARGB(255, 214, 49, 222)
+                                  ],
+                                  backColor: Color.fromARGB(120, 89, 89, 90),
+                                  onGetText: (double value) {
+                                    return Text(
+                                      value.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 72, 31, 176),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SimpleCircularProgressBar(
+                                  valueNotifier: weather.uvi != null
+                                      ? ValueNotifier(weather.uvi)
+                                      : ValueNotifier(0),
+                                  mergeMode: true,
+                                  progressColors: const [
+                                    Color.fromARGB(255, 72, 31, 176),
+                                    Color.fromARGB(255, 214, 49, 222)
+                                  ],
+                                  backColor: Color.fromARGB(120, 89, 89, 90),
+                                  onGetText: (double value) {
+                                    return Text(
+                                      value.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 72, 31, 176),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    )
                   ],
                 ),
               ),

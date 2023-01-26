@@ -13,8 +13,8 @@ class CurrentWeather {
   final num windDegree;
   final int visibility;
   final int cloudiness;
-  final double rainVolume;
-  final double snowVolume;
+  final num rainVolume;
+  final num snowVolume;
   final double uvi;
   final int sunrise;
   final int sunset;

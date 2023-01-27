@@ -53,14 +53,21 @@ class Topbar extends StatelessWidget {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: const Text("Change Unit"),
+                      title: const Text(
+                        "Change Unit",
+                      ),
                       content: StatefulBuilder(
                         builder: (context, setState) {
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               RadioListTile(
-                                title: const Text("Metric"),
+                                title: const Text(
+                                  "Metric (C°)",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
                                 value: "metric",
                                 groupValue: currentunit,
                                 onChanged: (value) {
@@ -68,7 +75,12 @@ class Topbar extends StatelessWidget {
                                 },
                               ),
                               RadioListTile(
-                                title: const Text("Imperial"),
+                                title: const Text(
+                                  "Imperial (F°)",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
                                 value: "imperial",
                                 groupValue: currentunit,
                                 onChanged: (value) {
@@ -130,8 +142,19 @@ class Topbar extends StatelessWidget {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: const Text("Enter City"),
+                      title: const Text("Search for other cities"),
                       content: TextField(
+                        decoration: const InputDecoration(
+                          hintText: "Enter city name",
+                          prefixIcon: Icon(
+                            Icons.location_pin,
+                            color: Colors.red,
+                          ),
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 2.0),
+                          ),
+                        ),
                         onChanged: (value) {
                           controller = value;
                         },

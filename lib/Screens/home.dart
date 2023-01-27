@@ -231,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Color.fromARGB(255, 72, 31, 176),
                                     Color.fromARGB(255, 214, 49, 222),
                                   ],
-                                  backColor: Color.fromARGB(120, 89, 89, 90),
+                                  backColor: const Color.fromARGB(120, 89, 89, 90),
                                   onGetText: (double value) {
                                     return Text(
                                       value.toString(),
@@ -256,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Color.fromARGB(255, 72, 31, 176),
                                     Color.fromARGB(255, 214, 49, 222)
                                   ],
-                                  backColor: Color.fromARGB(120, 89, 89, 90),
+                                  backColor: const Color.fromARGB(120, 89, 89, 90),
                                   onGetText: (double value) {
                                     return Text(
                                       value.toString(),
@@ -280,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Color.fromARGB(255, 72, 31, 176),
                                     Color.fromARGB(255, 214, 49, 222)
                                   ],
-                                  backColor: Color.fromARGB(120, 89, 89, 90),
+                                  backColor: const Color.fromARGB(120, 89, 89, 90),
                                   onGetText: (double value) {
                                     return Text(
                                       value.toString(),

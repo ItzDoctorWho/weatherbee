@@ -1,4 +1,3 @@
-
 class Forecast {
   final int date;
   final String weatherStatus;
@@ -10,8 +9,8 @@ class Forecast {
   final num maxTemperature;
   final int pressure;
   final int humidity;
-  final double windSpeed;
-  final int windDegree;
+  final num windSpeed;
+  final num windDegree;
   final int visibility;
   final int cloudiness;
   final double rainVolume;
